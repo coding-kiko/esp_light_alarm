@@ -2,7 +2,7 @@ mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
     volumes:
-      - /opt/mosquitto:/mosquitto
+      - ./mosquitto_config:/mosquitto
     ports:
       - 1883:1883
       - 9001:9001
