@@ -12,13 +12,13 @@ services:
       - 9001:9001
 
   ### BACKEND API ###
-  esp_alarm_api:
-    build: ./api
-    container_name: esp_alarm_api
-    restart: always
-    volumes:
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
+  # esp_alarm_api:
+  #   build: ./api
+  #   container_name: esp_alarm_api
+  #   restart: always
+  #   volumes:
+  #     - "/etc/timezone:/etc/timezone:ro"
+  #     - "/etc/localtime:/etc/localtime:ro"
 
   ### FRONTEND ###
   esp_alarm_ui:
