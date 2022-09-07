@@ -13,7 +13,7 @@ services:
 
   ### BACKEND API ###
   esp_alarm_api:
-    build: ./api
+    build: ./backend
     container_name: esp_alarm_api
     restart: always
     ports:
