@@ -1,8 +1,35 @@
-mosquitto:
+version: '3'
+services:
+  ### MQTT BROKER ###
+  mosquitto:
     image: eclipse-mosquitto
+    restart: always
     container_name: mosquitto
     volumes:
       - ./mosquitto:/mosquitto
     ports:
       - 1883:1883
       - 9001:9001
+
+  ### BACKEND API ###
+  esp_alarm_api:
+    build: ./api
+    container_name: esp_alarm_api
+    restart: always
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+
+  ### FRONTEND ###
+  esp_alarm_ui:
+    image: nginx
+    restart: always
+    container_name: esp_alarm_ui
+    ports:
+      - "8030:80"
+    volumes:
+      - ./frontEnd:/usr/share/nginx/html:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    environment:
+      - HTTP_PORT=80
+      - VIRTUAL_PORT=80
