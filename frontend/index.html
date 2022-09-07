@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Parcel Sandbox</title>
+    <title>ESP light alarm</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div id="app">
       <div style="text-align: center;">
         <button class="button-4" role="button">ON</button>
         <button class="button-4" role="button">OFF</button>
@@ -21,24 +20,19 @@
                 type="number"
                 name="hour"
                 placeholder="Enter hour"
-                min="1"
-                max="12"
+                min="0"
+                max="23"
                 required
               />
               <input
                 type="number"
                 name="min"
                 min="0"
-                max="55"
+                max="59"
                 step="5"
                 placeholder="Enter minute"
                 required
               />
-              <select name="period" required>
-                <option value="" selected disabled>Period</option>
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
             </div>
             <button class="button-4" role="button">Set</button>
           </form>
@@ -48,7 +42,6 @@
     <div id="active-alarm">
       <div id="alarm-text"></div>
       <button class="button-4" role="button" id="clear-alarm">Clear Alarm</button>
-    </div>
     <script src="main.js"></script>
   </body>
 </html>

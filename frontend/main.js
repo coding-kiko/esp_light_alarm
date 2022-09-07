@@ -16,11 +16,10 @@ const alarmText = (time) => `Alarm set at time ${time}`;
 const handleSubmit = (event) => {
   // Prevent default action of reloading the page
   event.preventDefault();
-  const { hour, min, period } = document.forms[0];
+  const { hour, min } = document.forms[0];
   alarmString = getTimeString({
     hours: hour.value,
     minutes: min.value,
-    period: period.value
   });
   // Reset form after submit
   document.forms[0].reset();
@@ -43,11 +42,11 @@ clearAlarm.addEventListener("click", handleClear);
 document.forms[0].addEventListener("submit", handleSubmit);
 
 // Function to convert time to string value
-const getTimeString = ({ hours, minutes, period }) => {
+const getTimeString = ({ hours, minutes }) => {
   if (minutes / 10 < 1) {
     minutes = "0" + minutes;
   }
-  return `${hours}:${minutes} ${period}`;
+  return `${hours}:${minutes}`;
 };
 
 // Function to display current time on screen
@@ -56,11 +55,7 @@ const renderTime = () => {
   const currentDate = new Date();
   var hours = currentDate.getHours();
   var minutes = currentDate.getMinutes();
-  var period = hours >= 12 ? "PM" : "AM";
-  if (hours > 12) {
-    hours = hours % 12;
-  }
-  const timeString = getTimeString({ hours, minutes, period });
+  const timeString = getTimeString({ hours, minutes });
   currentTime.innerHTML = timeString;
 };
 

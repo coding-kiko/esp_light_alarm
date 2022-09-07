@@ -5,6 +5,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(2);
 }
 #current-time {
   font-size: 32px;
