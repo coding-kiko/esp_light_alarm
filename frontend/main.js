@@ -46,13 +46,19 @@ const handleSubmit = (event) => {
   alarmTextContainer.innerHTML = alarmText(alarmString);
 };
 
-function checkExistingAlarm() {
-}
-
 const getCurrentAlarm = async () => {
   const response = await fetch('http://192.168.1.10:8031/api/alarm');
-  const myJson = await response.json(); //extract JSON from the http response
-  response.status
+  if (response.status == 200) {
+    const current = await response.json(); //extract JSON from the http response
+    console.log(current.hour)
+    createAlarm.style.display = "none";
+    activeAlarm.style.display = "block";
+    alarmString = getTimeString({
+        hours: current.hour,
+        minutes: current.min,
+    });
+    alarmTextContainer.innerHTML = alarmText(alarmString);
+  }
 }
 
 const setAlarm = async ({ h, m }) => {
@@ -105,4 +111,4 @@ const renderTime = () => {
 
 // Update time every second
 setInterval(renderTime, 1000);
-window.onload = checkExistingAlarm;
+window.onload = getCurrentAlarm();
