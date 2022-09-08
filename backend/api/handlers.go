@@ -25,7 +25,7 @@ func NewRouter(h Handler) http.Handler {
 	router.Path("/api/off").Methods("GET").HandlerFunc(h.turnOff) // ideally a PATCH but problem with cors unsafe methods
 	router.Path("/api/set").Methods("POST").HandlerFunc(h.setAlarm)
 	router.Path("/api/clear").Methods("GET").HandlerFunc(h.cancelAlarm) // ideally a DELETE but problem with cors unsafe methods
-	router.Path("api/alarm").Methods("GET").HandlerFunc(h.getAlarm)
+	router.Path("/api/alarm").Methods("GET").HandlerFunc(h.getAlarm)
 	router.Use(CorsMiddleware)
 	return router
 }
