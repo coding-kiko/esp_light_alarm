@@ -36,6 +36,8 @@ func (s *service) setAlarm(hour, min int) error {
 	if ok.Wait() && ok.Error() != nil {
 		return ok.Error()
 	}
+	s.currentAlarm.Hour = &hour
+	s.currentAlarm.Min = &min
 	return nil
 }
 
