@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"strconv"
 	"time"
 
@@ -23,6 +24,7 @@ type service struct {
 }
 
 func (s *service) getAlarm() (timeModel, error) {
+	log.Println(s)
 	if s.currentAlarm.Hour == nil || s.currentAlarm.Min == nil {
 		return timeModel{}, errors.New("no alarm")
 	}
@@ -37,7 +39,9 @@ func (s *service) setAlarm(hour, min int) error {
 		return ok.Error()
 	}
 	current := timeModel{Hour: &hour, Min: &min}
+	log.Println(s)
 	s.currentAlarm = current
+	log.Println(s)
 	return nil
 }
 
