@@ -12,10 +12,16 @@ type Handler interface {
 	turnOff(w http.ResponseWriter, r *http.Request)
 	setAlarm(w http.ResponseWriter, r *http.Request)
 	cancelAlarm(w http.ResponseWriter, r *http.Request)
+	getAlarm(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {
 	service Service
+}
+
+type timeModel struct {
+	Hour *int `json:"hour,omitempty"`
+	Min  *int `json:"min,omitempty"`
 }
 
 func NewRouter(h Handler) http.Handler {
@@ -24,6 +30,7 @@ func NewRouter(h Handler) http.Handler {
 	router.Path("/api/off").Methods("GET").HandlerFunc(h.turnOff) // ideally a PATCH but problem with cors unsafe methods
 	router.Path("/api/set").Methods("POST").HandlerFunc(h.setAlarm)
 	router.Path("/api/clear").Methods("GET").HandlerFunc(h.cancelAlarm) // ideally a DELETE but problem with cors unsafe methods
+	router.Path("api/alarm").Methods("GET").HandlerFunc(h.getAlarm)
 	router.Use(CorsMiddleware)
 	return router
 }
@@ -39,6 +46,16 @@ func CorsMiddleware(next http.Handler) http.Handler {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		next.ServeHTTP(w, r)
 	})
+}
+
+func (h *handler) getAlarm(w http.ResponseWriter, r *http.Request) {
+	resp, err := h.service.getAlarm()
+	if err != nil {
+		w.WriteHeader(404)
+		return
+	}
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(resp)
 }
 
 func (h *handler) turnOn(w http.ResponseWriter, r *http.Request) {
@@ -61,14 +78,9 @@ func (h *handler) turnOff(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 }
 
-type setReq struct {
-	Hour *int `json:"hour,omitempty"`
-	Min  *int `json:"min,omitempty"`
-}
-
 func (h *handler) setAlarm(w http.ResponseWriter, r *http.Request) {
 
-	req := setReq{}
+	req := timeModel{}
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(400)

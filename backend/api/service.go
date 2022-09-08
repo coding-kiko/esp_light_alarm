@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"strconv"
 	"time"
 
@@ -12,11 +13,20 @@ type Service interface {
 	turnOff() error
 	cancelAlarm() error
 	setAlarm(hour, min int) error
+	getAlarm() (timeModel, error)
 }
 
 type service struct {
-	mqttTopic  string
-	mqttClient mqtt.Client
+	mqttTopic    string
+	mqttClient   mqtt.Client
+	currentAlarm timeModel
+}
+
+func (s *service) getAlarm() (timeModel, error) {
+	if s.currentAlarm.Hour == nil || s.currentAlarm.Min == nil {
+		return timeModel{}, errors.New("no alarm")
+	}
+	return s.currentAlarm, nil
 }
 
 func (s *service) setAlarm(hour, min int) error {
