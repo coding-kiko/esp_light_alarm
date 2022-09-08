@@ -36,7 +36,7 @@ const handleSubmit = (event) => {
     minutes: min.value,
   });
 
-  setAlarm(hour.value, min.value);
+  setAlarm({h: hour.value, m: min.value});
   // Reset form after submit
   document.forms[0].reset();
   // Hide create alarm
@@ -50,13 +50,11 @@ const setAlarm = async ({ h, m }) => {
   const response = await fetch('http://192.168.1.10:8031/api/set', {
     mode: 'cors',
     method: 'POST',
-    body: {hour: parseInt(h), min: parseInt(m)}, // string or object
+    body: JSON.stringify({hour: parseInt(h), min: parseInt(m)}), // string or object
     headers: {
       'Content-Type': 'application/json'
     }
   });
-  const myJson = await response.json(); //extract JSON from the http response
-  // do something with myJson
 }
 
 const handleClear = () => {
