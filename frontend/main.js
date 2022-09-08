@@ -4,14 +4,15 @@ var alarmString = null;
 const createAlarm = document.querySelector(".create-alarm");
 
 const turnOn = async () => {
-  const response = await fetch('http://127.0.0.1:8031/api/on', {
-    proxy: true,
+  const response = await fetch('http://192.168.1.10:8031/api/on', {
+    mode: 'no-cors',
     method: 'GET',
   });
 }
 
 const turnOff = async () => {
-  const response = await fetch('http://127.0.0.1:8031/api/off', {
+  const response = await fetch('http://192.168.1.10:8031/api/off', {
+    mode: 'no-cors',
     method: 'GET',
   });
 }
