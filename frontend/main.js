@@ -46,6 +46,15 @@ const handleSubmit = (event) => {
   alarmTextContainer.innerHTML = alarmText(alarmString);
 };
 
+function checkExistingAlarm() {
+}
+
+const getCurrentAlarm = async () => {
+  const response = await fetch('http://192.168.1.10:8031/api/alarm');
+  const myJson = await response.json(); //extract JSON from the http response
+  response.status
+}
+
 const setAlarm = async ({ h, m }) => {
   const response = await fetch('http://192.168.1.10:8031/api/set', {
     mode: 'no-cors',
@@ -96,3 +105,4 @@ const renderTime = () => {
 
 // Update time every second
 setInterval(renderTime, 1000);
+window.onload = checkExistingAlarm;
