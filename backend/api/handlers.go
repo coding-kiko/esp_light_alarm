@@ -20,10 +20,10 @@ type handler struct {
 
 func NewRouter(h Handler) http.Handler {
 	router := mux.NewRouter()
-	router.Path("/api/on").Methods("GET").HandlerFunc(h.turnOn)
-	router.Path("/api/off").Methods("GET").HandlerFunc(h.turnOff)
+	router.Path("/api/on").Methods("GET").HandlerFunc(h.turnOn)   // ideally a PATCH but problem with cors unsafe methods
+	router.Path("/api/off").Methods("GET").HandlerFunc(h.turnOff) // ideally a PATCH but problem with cors unsafe methods
 	router.Path("/api/set").Methods("POST").HandlerFunc(h.setAlarm)
-	router.Path("/api/clear").Methods("GET").HandlerFunc(h.cancelAlarm)
+	router.Path("/api/clear").Methods("GET").HandlerFunc(h.cancelAlarm) // ideally a DELETE but problem with cors unsafe methods
 	router.Use(CorsMiddleware)
 	return router
 }

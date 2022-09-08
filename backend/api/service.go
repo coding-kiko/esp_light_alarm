@@ -65,21 +65,21 @@ func NewService(mc mqtt.Client, topic string) Service {
 func calculateSecondsUntil(hour, minute int) int {
 	now := time.Now()
 	if now.Hour() > hour {
-		return tomorrow(hour, minute)
+		return tomorrow(hour, minute, now.Second())
 	}
 	if now.Hour() < hour {
-		return today(hour, minute)
+		return today(hour, minute, now.Second())
 	}
 	if now.Minute() >= minute {
-		return tomorrow(hour, minute)
+		return tomorrow(hour, minute, now.Second())
 	}
-	return today(hour, minute)
+	return today(hour, minute, now.Second())
 }
 
-func today(hour, min int) int {
-	return 60 * (((hour - time.Now().Hour()) * 60) + min - time.Now().Minute())
+func today(hour, min, sec int) int {
+	return (60 * (((hour - time.Now().Hour()) * 60) + min - time.Now().Minute())) - sec
 }
 
-func tomorrow(hour, min int) int {
-	return (24 * 60 * 60) + today(hour, min)
+func tomorrow(hour, min, sec int) int {
+	return (24 * 60 * 60) + today(hour, min, sec)
 }
