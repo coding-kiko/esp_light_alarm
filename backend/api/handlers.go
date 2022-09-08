@@ -19,11 +19,6 @@ type handler struct {
 	service Service
 }
 
-type timeModel struct {
-	Hour *int `json:"hour,omitempty"`
-	Min  *int `json:"min,omitempty"`
-}
-
 func NewRouter(h Handler) http.Handler {
 	router := mux.NewRouter()
 	router.Path("/api/on").Methods("GET").HandlerFunc(h.turnOn)   // ideally a PATCH but problem with cors unsafe methods
@@ -49,6 +44,8 @@ func CorsMiddleware(next http.Handler) http.Handler {
 }
 
 func (h *handler) getAlarm(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	resp, err := h.service.getAlarm()
 	if err != nil {
 		w.WriteHeader(404)
