@@ -23,7 +23,7 @@ func NewRouter(h Handler) http.Handler {
 	router.Path("/api/on").Methods("GET").HandlerFunc(h.turnOn)
 	router.Path("/api/off").Methods("GET").HandlerFunc(h.turnOff)
 	router.Path("/api/set").Methods("POST").HandlerFunc(h.setAlarm)
-	router.Path("/api/clear").Methods("DELETE").HandlerFunc(h.cancelAlarm)
+	router.Path("/api/clear").Methods("GET").HandlerFunc(h.cancelAlarm)
 	router.Use(CorsMiddleware)
 	return router
 }
@@ -37,11 +37,6 @@ func NewHandler(s Service) Handler {
 func CorsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "*")
-		w.Header().Set("Access-Control-Request-Headers", "*")
-		w.Header().Set("Access-Control-Expose-Headers", "*")
-		w.Header().Set("Access-Control-Max-Age", "15")
-		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		next.ServeHTTP(w, r)
 	})
 }

@@ -48,7 +48,7 @@ const handleSubmit = (event) => {
 
 const setAlarm = async ({ h, m }) => {
   const response = await fetch('http://192.168.1.10:8031/api/set', {
-    mode: 'cors',
+    mode: 'no-cors',
     method: 'POST',
     body: JSON.stringify({hour: parseInt(h), min: parseInt(m)}), // string or object
     headers: {
@@ -67,7 +67,7 @@ const handleClear = () => {
 const deleteAlarm = async () => {
   const response = await fetch('http://192.168.1.10:8031/api/clear', {
     mode: 'cors',
-    method: 'DELETE',
+    method: 'GET',
   });
 }
 
