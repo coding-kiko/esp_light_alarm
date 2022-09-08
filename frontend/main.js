@@ -5,13 +5,13 @@ const createAlarm = document.querySelector(".create-alarm");
 
 const turnOn = async () => {
   const response = await fetch('http://127.0.0.1:8031/api/on', {
-    method: 'PATCH',
+    method: 'GET',
   });
 }
 
 const turnOff = async () => {
   const response = await fetch('http://127.0.0.1:8031/api/off', {
-    method: 'PATCH',
+    method: 'GET',
   });
 }
 

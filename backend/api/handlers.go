@@ -20,8 +20,8 @@ type handler struct {
 
 func NewRouter(h Handler) http.Handler {
 	router := mux.NewRouter()
-	router.Path("/api/on").Methods("PATCH").HandlerFunc(h.turnOn)
-	router.Path("/api/off").Methods("PATCH").HandlerFunc(h.turnOff)
+	router.Path("/api/on").Methods("GET").HandlerFunc(h.turnOn)
+	router.Path("/api/off").Methods("GET").HandlerFunc(h.turnOff)
 	router.Path("/api/set").Methods("POST").HandlerFunc(h.setAlarm)
 	router.Path("/api/clear").Methods("DELETE").HandlerFunc(h.cancelAlarm)
 	return router
