@@ -36,6 +36,11 @@ func (s *service) setAlarm(hour, min int) error {
 	if ok.Wait() && ok.Error() != nil {
 		return ok.Error()
 	}
+	go func() {
+		time.Sleep(time.Duration(seconds) * time.Second)
+		s.currentAlarm.Hour = nil
+		s.currentAlarm.Min = nil
+	}()
 	current := timeModel{Hour: &hour, Min: &min}
 	s.currentAlarm = current
 	return nil
