@@ -3,6 +3,19 @@ var alarmString = null;
 // Select DOM element with create-alarm id
 const createAlarm = document.querySelector(".create-alarm");
 
+const turnOn = async () => {
+  const response = await fetch('http://192.168.1.10:8031/api/on', {
+    mode: 'cors',
+    method: 'PATCH',
+  });
+}
+
+const turnOff = async () => {
+  const response = await fetch('http://192.168.1.10:8031/api/off', {
+    method: 'PATCH',
+  });
+}
+
 // Select DOM element of active alarm container
 const activeAlarm = document.getElementById("active-alarm");
 const clearAlarm = document.getElementById("clear-alarm");
@@ -34,7 +47,14 @@ const handleClear = () => {
   alarmString = "";
   activeAlarm.style.display = "none";
   createAlarm.style.display = "block";
+  deleteAlarm();
 };
+
+const deleteAlarm = async () => {
+  const response = await fetch('http://192.168.1.10:8031/api/clear', {
+    method: 'DELETE',
+  });
+}
 
 // Trigger handleClear on button click
 clearAlarm.addEventListener("click", handleClear);
