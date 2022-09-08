@@ -35,6 +35,8 @@ const handleSubmit = (event) => {
     hours: hour.value,
     minutes: min.value,
   });
+
+  setAlarm(hour.value, min.value);
   // Reset form after submit
   document.forms[0].reset();
   // Hide create alarm
@@ -44,6 +46,19 @@ const handleSubmit = (event) => {
   alarmTextContainer.innerHTML = alarmText(alarmString);
 };
 
+const setAlarm = async ({ h, m }) => {
+  const response = await fetch('http://192.168.1.10:8031/api/set', {
+    mode: 'cors',
+    method: 'POST',
+    body: {hour: parseInt(h), min: parseInt(m)}, // string or object
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const myJson = await response.json(); //extract JSON from the http response
+  // do something with myJson
+}
+
 const handleClear = () => {
   alarmString = "";
   activeAlarm.style.display = "none";
@@ -52,7 +67,8 @@ const handleClear = () => {
 };
 
 const deleteAlarm = async () => {
-  const response = await fetch('http://localhost:8031/api/clear', {
+  const response = await fetch('http://192.168.1.10:8031/api/clear', {
+    mode: 'cors',
     method: 'DELETE',
   });
 }
