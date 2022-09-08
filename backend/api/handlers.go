@@ -34,7 +34,6 @@ func NewHandler(s Service) Handler {
 }
 
 func (h *handler) turnOn(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	err := h.service.turnOn()
 	if err != nil {
@@ -45,7 +44,6 @@ func (h *handler) turnOn(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) turnOff(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	err := h.service.turnOff()
 	if err != nil {
@@ -61,7 +59,6 @@ type setReq struct {
 }
 
 func (h *handler) setAlarm(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	req := setReq{}
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -82,7 +79,6 @@ func (h *handler) setAlarm(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) cancelAlarm(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	err := h.service.cancelAlarm()
 	if err != nil {

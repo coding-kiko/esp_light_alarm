@@ -4,14 +4,13 @@ var alarmString = null;
 const createAlarm = document.querySelector(".create-alarm");
 
 const turnOn = async () => {
-  const response = await fetch('http://192.168.1.10:8031/api/on', {
-    mode: 'cors',
+  const response = await fetch('http://localhost:8031/api/on', {
     method: 'PATCH',
   });
 }
 
 const turnOff = async () => {
-  const response = await fetch('http://192.168.1.10:8031/api/off', {
+  const response = await fetch('http://localhost:8031/api/off', {
     method: 'PATCH',
   });
 }
@@ -51,7 +50,7 @@ const handleClear = () => {
 };
 
 const deleteAlarm = async () => {
-  const response = await fetch('http://192.168.1.10:8031/api/clear', {
+  const response = await fetch('http://localhost:8031/api/clear', {
     method: 'DELETE',
   });
 }
